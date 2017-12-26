@@ -3,7 +3,7 @@
 To start the server at port 9000:
 python server.py 9000
 
-To start a client:
+To start a client for 11 seconds connecting to localhost:9000 and using "foo" as part of the id.
 python client.py localhost 9000 11 --label foo 
 
 Client usage:
