@@ -1,7 +1,7 @@
 # diskbench
 
 ## Requirements
-`sudo pip install psutils`
+`sudo pip install psutil`
 
 `sudo pip install unittest2`
 
