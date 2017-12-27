@@ -39,7 +39,7 @@ optional arguments:
   --out dir      Target directory (/tmp if omitted)   
   ```
   
-Unit tests:
+# Unit tests:
 
 `  python client_tests.py`
 
