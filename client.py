@@ -17,7 +17,7 @@ import shutil
 class Worker:
     """ The worker writing to files (started in separate process for accurate CPU and mem stat collection """
     kill_now = False
-    def __init__(self, stop_event, server_proxy, my_id, label, chunk, size):
+    def __init__(self, stop_event, server_proxy, my_id, label, chunk, size, out):
         self.stop_event = stop_event
         self.server_proxy = server_proxy
         self.my_id = my_id
@@ -26,7 +26,9 @@ class Worker:
         self.size = size
         signal.signal(signal.SIGINT, self.exit_gracefully)
         signal.signal(signal.SIGTERM, self.exit_gracefully)
-        self.base = self._makepath("/tmp/bench/")
+        if out is None:
+            out = "/tmp"
+        self.base = self._makepath(out+"/bench/")
         self._prep(self.base)
 
     def exit_gracefully(self, signum, frame):
@@ -86,6 +88,10 @@ class CpuMemCollector:
     def run(self):
         """ Collect cpu and mem until we're told to stop """
         proc = psutil.Process(self.worker_pid)
+        # Get some initial values
+        cpu, mem = proc.cpu_percent(1), proc.memory_info()
+        print cpu, mem
+        _ = self.server_proxy.perf(self.my_id, cpu, mem.rss)
         while not self.stop_event.wait(1):
             try:
                 cpu, mem = proc.cpu_percent(10), proc.memory_info()
@@ -113,7 +119,7 @@ class BenchClient:
 
     assumed_disk_tput = 50*1024*1024 # 50MB/s
 
-    def __init__(self, server, port, duration, label=None, chunk=None, size=None):
+    def __init__(self, server, port, duration, label=None, chunk=None, size=None, out=None):
         self.port = port
         self.server = server
         self.label = label
@@ -125,6 +131,9 @@ class BenchClient:
             size = chunk * 4
         self.chunk = chunk*1024*1024
         self.size = size*1024*1024
+        if out is None:
+            out = "/tmp"
+        self.out = out
 
     def start(self):
         # Sanity checks
@@ -139,7 +148,7 @@ class BenchClient:
 
         server_proxy = ServerProxy("http://%s:%s" % (self.server, self.port))
 
-        worker = Worker(pill2kill, server_proxy, self.my_id, self.label, self.chunk, self.size)
+        worker = Worker(pill2kill, server_proxy, self.my_id, self.label, self.chunk, self.size, self.out)
         worker_proc = worker.run()
 
         heartbeat = Heartbeat(pill2kill, server_proxy, self.my_id)
@@ -170,8 +179,9 @@ def main():
     parser.add_argument("--label", help="Label for this client")
     parser.add_argument("--chunk", type=int, help="Chunk size in MB")
     parser.add_argument("--size", type=int, help="File size in MB")
+    parser.add_argument("--out", help="Target directory for output files")
     args = parser.parse_args()
-    bench_client = BenchClient(args.server, args.port, args.duration, args.label, args.chunk, args.size)
+    bench_client = BenchClient(args.server, args.port, args.duration, args.label, args.chunk, args.size, args.out)
     bench_client.start()
 
 if __name__ == '__main__': main()

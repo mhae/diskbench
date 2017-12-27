@@ -87,7 +87,7 @@ class BenchServer:
         # Assumes locked client_info
         logging.info("Report:")
         for ci in self.client_info.itervalues():
-            logging.info("%s: completed=%s avg cpu=%d, avg_mem=%d", ci.id, not ci.aborted, ci.avg_cpu(), ci.avg_mem())
+            logging.info("%s: completed=%s avg_cpu=%d, avg_mem=%d", ci.id, not ci.aborted, ci.avg_cpu(), ci.avg_mem())
 
     def _watchdog(self):
         """ Watchdog for client termination and aborts """
@@ -123,7 +123,7 @@ class BenchServer:
             self.rpc_server.shutdown()
 
     def run(self):
-        self.rpc_server = SimpleThreadedXMLRPCServer(("", self.port))
+        self.rpc_server = SimpleThreadedXMLRPCServer(("", self.port), logRequests=False)
         self.rpc_server.register_instance(self)
 
         watchdog = Thread(target = self._watchdog)
