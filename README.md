@@ -5,7 +5,7 @@
 
 `sudo pip install unittest2`
 
-(To install pip on Ubuntu 14.04: `sudo apt-get install python-pip`)
+(To install pip on Ubuntu 14.04: `sudo apt-get install python-pip python-dev build-essential`)
 
 ## Running
 
