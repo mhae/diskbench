@@ -5,6 +5,8 @@
 
 `pip install unittest2`
 
+(To install pip on Ubuntu 14.04: `sudo apt-get install python-pip`)
+
 ## Running
 
 To start the server at port 9000:
