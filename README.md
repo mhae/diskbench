@@ -35,6 +35,7 @@ optional arguments:
   --label LABEL  Label for this client
   --chunk CHUNK  Chunk size in MB
   --size SIZE    File size in MB
+  --out dir      Target directory (/tmp if omitted)   
   ```
   
 Unit tests:
