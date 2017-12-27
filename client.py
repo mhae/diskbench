@@ -108,7 +108,7 @@ class Heartbeat:
         self.my_id = my_id
 
     def run(self):
-        """ Send hearbeat very 5s """
+        """ Send hearbeat every 5s """
         while not self.stop_event.wait(5):
             _ = self.server_proxy.heartbeat(self.my_id)
             
