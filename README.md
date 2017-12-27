@@ -28,3 +28,6 @@ optional arguments:
   --size SIZE    File size in MB
   ```
   
+Unit tests:
+`  python client_tests.py`
+`  python server_tests.py`
