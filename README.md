@@ -1,5 +1,12 @@
 # diskbench
 
+## Requirements
+`pip install psutils`
+
+`pip install unittest2`
+
+## Running
+
 To start the server at port 9000:
 
 `  python server.py 9000`
