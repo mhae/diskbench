@@ -1,9 +1,9 @@
 # diskbench
 
 ## Requirements
-`pip install psutils`
+`sudo pip install psutils`
 
-`pip install unittest2`
+`sudo pip install unittest2`
 
 (To install pip on Ubuntu 14.04: `sudo apt-get install python-pip`)
 
