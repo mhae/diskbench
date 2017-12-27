@@ -21,13 +21,12 @@ To start a client for 11 seconds connecting to localhost:9000 and using "foo" as
 
 Client usage:
 ```
-usage: client.py [-h] [--label LABEL] [--chunk CHUNK] [--size SIZE]
-                 server port duration
+usage: client.py [-h] [--label LABEL] [--chunk CHUNK] [--size SIZE] server port duration
 
 positional arguments:
   server         Server IP or name
   port           Server port
-  duration       Duration in seconds (must be > 10)
+  duration       Duration in seconds (must be > 1)
   
 
 optional arguments:
