@@ -142,6 +142,8 @@ class BenchClient:
         # Assuming 50MB/s write speed, sanity check the duration against the chunk size
         if self.duration < self.chunk*2/self.assumed_disk_tput:
             raise ValueError("Duration must be least %ds for specified chunk size" % (self.chunk*2/self.assumed_disk_tput)) 
+        if self.chunk > self.size:
+            raise ValueError("File size must be greater than the chunk size")
 
         # Config
         pill2kill = Event()

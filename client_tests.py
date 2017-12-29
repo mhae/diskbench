@@ -35,7 +35,7 @@ class TestWorker(unittest2.TestCase):
         pill2kill = Event()
         server_proxy = ServerProxy()
 
-        worker = Worker(pill2kill, server_proxy, "myid", "test", 1024, 4096)
+        worker = Worker(pill2kill, server_proxy, "myid", "test", 1024, 4096, None)
         worker._write_chunks(1)
         self.assertEqual(4096, os.path.getsize('/tmp/bench/test/1'))
         self.assertEqual(1, server_proxy.nextfile_cnt)
