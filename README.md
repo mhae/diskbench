@@ -34,8 +34,8 @@ positional arguments:
 optional arguments:
   -h, --help     show this help message and exit
   --label LABEL  Label for this client
-  --chunk CHUNK  Chunk size in MB
-  --size SIZE    File size in MB
+  --chunk CHUNK  Chunk size in MB (default: 10 MB)
+  --size SIZE    File size in MB (default: 4 times the chunk size)
   --out dir      Target directory (/tmp if omitted)   
   ```
   
